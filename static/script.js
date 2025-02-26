@@ -1,84 +1,82 @@
 const API_BASE_URL = "http://localhost:8000/api";
 
-// Store trusted contacts at login
-function storeTrustedContacts(userId, trustedContacts) {
-    fetch(`${API_BASE_URL}/trusted_contacts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: userId, trusted_contacts: trustedContacts })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data.message))
-    .catch(error => console.error("Error saving trusted contacts"));
-}
-
-// Function to share location
+// Function to share location via WhatsApp
 function sendLocation() {
+    const userId = document.getElementById("userId").value;
+    const friendPhone = document.getElementById("friendPhone").value;
+
+    if (!userId || !friendPhone) {
+        alert("Please enter your ID and your friend's phone number.");
+        return;
+    }
+
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const userId = prompt("Enter your User ID:");
-            const trustedContacts = prompt("Enter trusted contacts (comma separated User IDs):").split(",");
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
-            const locationData = {
-                user_id: userId,
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                timestamp: Date.now(),
-                trusted_contacts: trustedContacts
-            };
+            // Send location via WhatsApp
+            const message = `Hey, I'm sharing my live location. Click here: ${googleMapsLink}`;
+            const whatsappURL = `https://wa.me/${friendPhone}?text=${encodeURIComponent(message)}`;
 
-            fetch(`${API_BASE_URL}/location/share`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(locationData)
-            })
-            .then(response => response.json())
-            .then(data => alert(data.message))
-            .catch(error => alert("Error sharing location"));
+            window.open(whatsappURL, "_blank"); // Open WhatsApp chat
         });
     } else {
         alert("Geolocation is not supported by this browser.");
     }
 }
 
-// Function to get location
-function getLocation() {
-    const userId = document.getElementById("userId").value;
-    const requesterId = prompt("Enter your User ID to verify:");
+// -------------------- VOICE ACTIVATION FEATURE --------------------
 
-    fetch(`${API_BASE_URL}/location/${userId}/${requesterId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.latitude && data.longitude) {
-                document.getElementById("locationResult").innerText =
-                    `Latitude: ${data.latitude}, Longitude: ${data.longitude}`;
+let mediaRecorder;
+let audioChunks = [];
 
-                updateMap(data.latitude, data.longitude);
-            } else {
-                alert("Location not found.");
-            }
+// Function to start voice recording
+function startVoiceRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            audioChunks = [];
+
+            mediaRecorder.addEventListener("dataavailable", event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener("stop", () => {
+                const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                sendAudioToWhatsApp(audioBlob);
+            });
+
+            setTimeout(() => {
+                mediaRecorder.stop();
+            }, 5000); // Stop recording after 5 seconds
         })
-        .catch(error => alert("User location not found"));
+        .catch(error => {
+            console.error("Error accessing microphone:", error);
+            alert("Microphone access denied or unavailable.");
+        });
 }
 
-// Initialize Google Map
-let map;
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 0, lng: 0 },
-        zoom: 5
-    });
-}
+// Function to send recorded voice via WhatsApp
+function sendAudioToWhatsApp(audioBlob) {
+    const friendPhone = document.getElementById("friendPhone").value;
 
-// Update Map with User Location
-function updateMap(lat, lng) {
-    const userLocation = new google.maps.LatLng(lat, lng);
-    map.setCenter(userLocation);
-    map.setZoom(15);
+    if (!friendPhone) {
+        alert("Please enter your friend's phone number before sending the voice note.");
+        return;
+    }
 
-    new google.maps.Marker({
-        position: userLocation,
-        map: map,
-        title: "User's Location"
-    });
+    // Create a download link for the audio
+    const audioUrl = URL.createObjectURL(audioBlob);
+    
+    // WhatsApp does not allow direct media uploads, so we provide a manual sharing link
+    alert("WhatsApp does not support direct voice message uploads. Please download the audio and share it manually.");
+    
+    // Create a temporary link for users to download the voice message
+    const tempLink = document.createElement("a");
+    tempLink.href = audioUrl;
+    tempLink.download = "voice_message.wav";
+    tempLink.click();
 }
