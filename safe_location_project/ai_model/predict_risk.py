@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 # Load trained model
-model_path = os.path.join("ai_model","ai_model", "crime_risk_model.pkl")
+model_path = os.path.join("ai_model", "crime_risk_model.pkl")
 model = joblib.load(model_path)
 
 def predict_risk(crime_type):

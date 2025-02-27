@@ -121,39 +121,45 @@ def get_risk_score(request, latitude, longitude):
 
 
 @csrf_exempt
-def get_ai_risk_score(request, city):
-    """Fetch AI-predicted risk score for a given city."""
-    latitude, longitude = get_lat_lon(city)  # Convert city to lat/lon
-    if latitude is None or longitude is None:
-        return JsonResponse({"error": "Invalid city name."}, status=400)
+def get_ai_risk_score(request, city=None, latitude=None, longitude=None):
+    """Fetch AI-predicted risk score by city OR latitude/longitude."""
+    
+    if city:
+        latitude, longitude = get_lat_lon(city)  # Convert city to lat/lon
+        if latitude is None or longitude is None:
+            return JsonResponse({"error": "Invalid city name."}, status=400)
+    elif latitude and longitude:
+        try:
+            latitude = float(latitude)
+            longitude = float(longitude)
+        except ValueError:
+            return JsonResponse({"error": "Invalid latitude or longitude format."}, status=400)
+    else:
+        return JsonResponse({"error": "Provide a city or latitude/longitude."}, status=400)
 
-    # Ensure correct input shape based on the model's training data
+    # Debugging log
+    print(f"AI Risk Prediction -> City: {city}, Lat: {latitude}, Lon: {longitude}")
+
     if model:
         try:
             num_features = model.n_features_in_
-            print(f"Model expects {num_features} features.")
-
             if num_features == 1:
-                risk_features = np.array([[latitude]])  # Pass only latitude
+                risk_features = np.array([[latitude]])
             else:
-                risk_features = np.array([[latitude, longitude]])  # Pass both features
+                risk_features = np.array([[latitude, longitude]])
 
-            risk_score = model.predict(risk_features)[0]  # Predict risk score
-
-            # Convert numpy.int64 to Python int
-            risk_score = int(risk_score)
-
+            risk_score = model.predict(risk_features)[0]
+            risk_score = int(risk_score)  # Convert to Python int
             risk_message = assess_risk(risk_score)
+
         except Exception as e:
             return JsonResponse({"error": f"AI model prediction error: {str(e)}"}, status=500)
     else:
         return JsonResponse({"error": "AI model not loaded."}, status=500)
 
     return JsonResponse({
-        "city": city,
         "latitude": latitude,
         "longitude": longitude,
-        "ai_risk_score": risk_score,  
+        "ai_risk_score": risk_score,
         "ai_risk_message": risk_message
     })
-
