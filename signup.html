@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharosa AI</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://static.lsm.lv/media/2020/11/large/1/ebr4.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* Navigation Bar */
+        nav {
+            width: 100%;
+            background-color: rgba(26, 188, 156, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 25px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        .nav-buttons {
+            margin-left: auto;
+            position: relative; /* Added for dropdown positioning */
+        }
+
+        .nav-buttons .btn {
+            margin: 0 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #f39c12;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-buttons .btn:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            display: none; /* Hidden by default */
+            position: absolute;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 200; /* On top of other elements */
+            padding: 20px;
+            width: 400px; /* Increased width for better visibility */
+            max-width: 90vw; /* Responsive max-width */
+        }
+
+        .profile-dropdown h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .profile-dropdown p {
+            margin: 10px 0;
+            color: #dcdcdc; /* Darker white for text */
+            font-size: 1.2rem;
+            text-align: left; /* Align text to left */
+        }
+
+        .profile-dropdown .profile-detail {
+            margin-bottom: 5px; /* Space between details */
+            display: flex;
+            justify-content: space-between; /* Ensure spacing is efficient */
+            color: #dcdcdc; /* Darker white for detail text */
+        }
+
+        /* Page Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        /* Enhanced Heading Style */
+        .main-heading {
+            font-family: 'Roboto', sans-serif;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: rgba(26, 188, 156, 0.8);
+            color: #fff;
+            padding: 40px 20px; /* Adjust padding */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInHero 1.5s ease-out;
+        }
+
+        @keyframes fadeInHero {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: #ecf0f1;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Modals and Buttons */
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #f39c12;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #e67e22;
+            transform: scale(1.1);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Story Section */
+        .stories-section {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: rgba(236, 240, 241, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stories-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
+        }
+
+        .story-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .story-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-box img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .story-box h3 {
+            color: #e74c3c;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .story-box p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #34495e;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: #f39c12;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 8px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-modal button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .login-modal button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Register Modal */
+        .register-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 8px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .register-modal button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .register-modal button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Help Page Modal */
+        .help-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .help-modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 8px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Close Modal Button */
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;  /* Changed to white */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 3rem;
+            }
+
+            .story-box {
+                width: 220px;
+            }
+
+            .btn {
+                font-size: 1.1rem;
+            }
+
+            .profile-dropdown {
+                width: 350px; /* Adjusted width for mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-heading {
+                font-size: 2.5rem;
+            }
+
+            .story-box {
+                width: 180px;
+            }
+
+            .btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#stories">All Stories</a></li>
+            <li><a href="#take-action">Take Action</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Get in Touch</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn" id="logoutButton" style="display: none;" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout</button>
+            <button class="btn" id="profileButton" style="display: none;" onclick="toggleProfileDropdown()">
+                <i class="fas fa-user-circle"></i> Profile</button>
+            <button class="btn" id="loginButton" onclick="showLoginModal()">
+                <i class="fas fa-sign-in-alt"></i> Login</button>
+            <button class="btn" id="registerButton" onclick="showRegisterModal()">
+                <i class="fas fa-user-plus"></i> Register</button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <h3>User Profile</h3>
+                <div class="profile-detail">
+                    <span>Username:</span>
+                    <span id="userDetails"></span>
+                </div>
+                <div class="profile-detail">
+                    <span>Email:</span>
+                    <span id="userEmail"></span>
+                </div>
+                <div class="profile-detail">
+                    <span>Phone:</span>
+                    <span id="userPhone"></span>
+                </div>
+                <span class="close-modal" onclick="closeProfileDropdown()">×</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Heading -->
+        <h1 class="main-heading">Welcome to Bharosa AI</h1>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h2>Bharosa AI</h2>
+            <p class="hero-description">
+                Empowering solutions with Artificial Intelligence to create a safer and more trustworthy world for everyone. Let AI be the backbone of a better tomorrow.
+            </p>
+            <button class="btn" onclick="learnMore()">Learn More</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-content">
+            <span class="close-modal" onclick="closeLoginModal()">×</span>
+            <h2>Login to Bharosa AI</h2>
+            <form onsubmit="loginUser(event)">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="text" placeholder="Mobile Number" name="mobile" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-content">
+            <span class="close-modal" onclick="closeRegisterModal()">×</span>
+            <h2>Register for Bharosa AI</h2>
+            <form onsubmit="registerUser(event)">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="text" placeholder="Phone Number" name="phone" maxlength="10" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Help Page Modal -->
+    <div class="help-modal" id="helpModal">
+        <div class="help-modal-content">
+            <span class="close-modal" onclick="closeHelpModal()">×</span>
+            <h2>Help</h2>
+            <p>If you need help, please reach out to our support at support@bharosaai.com.</p>
+            <button class="btn" onclick="closeHelpModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Stories Section -->
+    <div class="stories-section" id="stories">
+        <h2>Discover Stories</h2>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/webform/ugc_form_women_empowerment/260644/2%20-%20a%20boy%20had%20been%20bothering%20me%20on%20Facebook%20sendin.png" alt="Environment Story">
+            <h3>Environment</h3>
+            <p>Exploring how AI can be used to save the environment and promote sustainability.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2024-04/mental-health-2023.jpg?itok=apNM7Sb0" alt="Mental Health Story">
+            <h3>Mental Health</h3>
+            <p>AI to address and improve mental health challenges globally.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2023-03/Women%27s%20Empowerment.png?itok=Bl76ool6" alt="Women's Empowerment">
+            <h3>Empower HER</h3>
+            <p>All women deserve to live in a world that prioritises their safety, voices, and autonomy. Our Better World explores the challenges faced by women and girls across Asia, and seeks to inspire collective action towards creating a better world for them.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2024-04/refugee.jpg?itok=NdmcSE1Y" alt="Refugees Story">
+            <h3>Refugees: Displaced, Not Discouraged</h3>
+            <p>Explore the inspiring stories of refugees across Asia who continue to thrive and contribute to their new communities despite facing adversity. See how organizations and local communities help them rebuild their lives with dignity.</p>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>©️ 2025 Bharosa AI. All Rights Reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms & Conditions</a></p>
+    </footer>
+
+    <script>
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        function loginUser(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            // Simulate fetching stored user data from localStorage
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
+                alert('Login successful!');
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('registerButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'inline-block';
+                document.getElementById('logoutButton').style.display = 'inline-block';
+                closeLoginModal();
+                showProfile(username, storedUser.email, storedUser.phone); // Use mobile number for profile
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const email = event.target.email.value;
+            const phone = event.target.phone.value;
+            const password = event.target.password.value;
+
+            // Check if user already exists
+            const existingUser = JSON.parse(localStorage.getItem('user'));
+
+            if (existingUser && (existingUser.username === username || existingUser.email === email)) {
+                alert('User already exists. Please try to login.');
+                return; // Prevent registration if user exists
+            }
+
+            // Validate phone number length
+            if (phone.length !== 10) {
+                alert('Mobile number must be exactly 10 digits.');
+                return;
+            }
+
+            const user = { username, email, phone, password };
+            localStorage.setItem('user', JSON.stringify(user));
+
+            alert('Registration successful! You can now log in.');
+            closeRegisterModal();
+        }
+
+        function showProfile(username, email, phone) {
+            const userDetails = document.getElementById('userDetails');
+            const userEmail = document.getElementById('userEmail');
+            const userPhone = document.getElementById('userPhone');
+
+            userDetails.innerHTML = username; // Set username directly
+            userEmail.innerHTML = email; // Set email directly
+            userPhone.innerHTML = phone; // Set phone directly
+            document.getElementById('profileDropdown').style.display = 'block';
+        }
+
+        function closeProfileDropdown() {
+            document.getElementById('profileDropdown').style.display = 'none';
+        }
+
+        function showHelpModal() {
+            document.getElementById('helpModal').style.display = 'flex';
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('logoutButton').style.display = 'none';
+            document.getElementById('loginButton').style.display = 'inline-block';
+            document.getElementById('registerButton').style.display = 'inline-block';
+            document.getElementById('profileDropdown').style.display = 'none';
+            alert('Logged out successfully!');
+        }
+    </script>
+</body>
+
+</html>
