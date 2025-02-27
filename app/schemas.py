@@ -5,3 +5,6 @@ class LocationSchema(BaseModel):
     latitude: float
     longitude: float
     timestamp: int
+
+    class Config:
+        from_attributes = True  # Allows ORM model conversion
