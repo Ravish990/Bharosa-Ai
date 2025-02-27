@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+email-validator
+numpy
+scipy
+speechrecognition
+pyaudio
