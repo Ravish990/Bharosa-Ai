@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharosa AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#stories"><i class="fas fa-book-open"></i> All Stories</a></li>
+            <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Get in Touch</a></li>
+            <li><a href="trusted-contacts.html">Add Trusted Contacts</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn" id="logoutButton" style="display: none;" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <button class="btn" id="profileButton" style="display: none;" onclick="showProfile()">
+                <i class="fas fa-user-circle"></i> <span id="userDetails">Profile</span>
+            </button>
+            <button class="btn" id="loginButton" onclick="showLoginModal()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn" id="registerButton" onclick="showRegisterModal()">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+        </div>
+    </nav>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <h1 class="main-heading">Welcome to Bharosa AI</h1>
+
+        <div class="hero-section">
+            <h2>Bharosa AI</h2>
+            <p class="hero-description">
+                Empowering solutions with Artificial Intelligence to create a safer and more trustworthy world for everyone. Let AI be the backbone of a better tomorrow.
+            </p>
+            <button class="learn-more-btn" id="learnMoreButton">Learn More</button>
+        </div>
+
+        <button class="take-action-button" id="takeActionButton" style="display: none;" onclick="takeAction()">Take Action</button>
+    </div>
+
+    <!-- Discover Stories Section -->
+    <div class="stories-section" id="stories">
+        <h2>Discover Stories</h2>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/webform/ugc_form_women_empowerment/260644/2%20-%20a%20boy%20had%20been%20bothering%20me%20on%20Facebook%20sendin.png" alt="Environment Story">
+            <h3>Environment</h3>
+            <p>Exploring how AI can be used to save the environment and promote sustainability.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2024-04/mental-health-2023.jpg?itok=apNM7Sb0" alt="Mental Health Story">
+            <h3>Mental Health</h3>
+            <p>AI to address and improve mental health challenges globally.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2023-03/Women%27s%20Empowerment.png?itok=Bl76ool6" alt="Women's Empowerment">
+            <h3>Empower HER</h3>
+            <p>All women deserve to live in a world that prioritises their safety, voices, and autonomy. Our Better World explores the challenges faced by women and girls across Asia and seeks to inspire collective action towards creating a better world for them.</p>
+        </div>
+        <div class="story-box">
+            <img src="https://www.ourbetterworld.org/sites/default/files/styles/thumbnail_255x170/public/2024-04/refugee.jpg?itok=NdmcSE1Y" alt="Refugees Story">
+            <h3>Refugees: Displaced, Not Discouraged</h3>
+            <p>Explore the inspiring stories of refugees across Asia who continue to thrive and contribute to their new communities despite facing adversity. See how organizations and local communities help them rebuild their lives with dignity.</p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">×</span>
+            <form onsubmit="loginUser(event)">
+                <h2>Login</h2>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required> <!-- New Email Input -->
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="text" name="phone" placeholder="Phone Number" required> <!-- Phone Number Input -->
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">×</span>
+            <form onsubmit="registerUser(event)">
+                <h2>Register</h2>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profileSection" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProfile()">×</span>
+            <h2>User Profile</h2>
+            <p><strong>Username:</strong> <span id="profileUsername"></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+            <p><strong>Phone:</strong> <span id="profilePhone"></span></p> <!-- Display Phone -->
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2025 Bharosa AI. All Rights Reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms & Conditions</a></p>
+    </footer>
+
+    <script src="scripts.js"></script> <!-- Link to JS file -->
+</body>
+
+</html>

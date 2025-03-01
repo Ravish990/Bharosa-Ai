@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Trusted Contacts</title>
+    <link rel="stylesheet" href="contacts.css"> <!-- Link to your new CSS file -->
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Add Your Trusted Contacts</h1>
+        <form id="contacts-form">
+            <div>
+                <label for="contact1">Contact 1:</label>
+                <input type="text" id="contact1" placeholder="Enter Contact 1" required>
+            </div>
+            <div>
+                <label for="contact2">Contact 2:</label>
+                <input type="text" id="contact2" placeholder="Enter Contact 2" required>
+            </div>
+            <div>
+                <label for="contact3">Contact 3:</label>
+                <input type="text" id="contact3" placeholder="Enter Contact 3" required>
+            </div>
+            <div>
+                <label for="contact4">Contact 4:</label>
+                <input type="text" id="contact4" placeholder="Enter Contact 4" required>
+            </div>
+            <button type="submit">Save Contacts</button>
+        </form>
+        <div id="message"></div>
+    
+        <!-- SOS Button -->
+        <button id="sosButton">SOS</button>
+    
+        <!-- Share Location Button -->
+        <button id="shareLocationButton">Share Location</button>
+    
+        <div class="location-inputs">
+            <input type="text" id="startingPoint" placeholder="Starting Point">
+            <div class="arrow"></div> <!-- Arrow will point towards destination -->
+            <input type="text" id="destination" placeholder="Destination">
+        </div>
+    </div>
+
+    <script src="contacts.js"></script> <!-- Link to your JS file if required -->
+</body>
+</html>

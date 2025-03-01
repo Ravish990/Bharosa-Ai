@@ -1,0 +1,409 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('https://static.lsm.lv/media/2020/11/large/1/ebr4.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* Navigation Bar */
+nav {
+    width: 100%;
+    background-color: rgba(26, 188, 156, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 30px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    padding: 5px 10px;
+    position: relative;
+}
+
+nav ul li a:hover {
+    color: #f39c12;
+}
+
+/* Welcome Section */
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Enhanced Heading Style */
+.main-heading {
+    font-family: 'Roboto', sans-serif;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #e74c3c;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: rgba(26, 188, 156, 0.8);
+    color: #fff; /* Set text color to white */
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.hero-description {
+    font-size: 1.3rem;
+    color: #ecf0f1; /* Set text color to white */
+    margin-bottom: 30px;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Learn More Button */
+.learn-more-btn {
+    padding: 15px 30px;
+    font-size: 1.3rem;
+    color: white;
+    background-color: #f39c12;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.learn-more-btn:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+}
+
+/* Action Button */
+.take-action-button {
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    color: white;
+    background-color: #f39c12;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.take-action-button:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+}
+
+/* Story Section */
+.stories-section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: rgba(236, 240, 241, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.stories-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-weight: 600;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+}
+
+.story-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    height: auto; /* Adjusted height to auto for better fitting */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+}
+
+.story-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.story-box img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.story-box h3 {
+    color: #e74c3c;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.story-box p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.5;
+    max-height: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #000; /* Set background color to black */
+    margin: 10% auto; /* Space from the top */
+    padding: 40px; /* Increased padding */
+    border: none; /* Removed border */
+    border-radius: 10px; /* Rounded corners */
+    width: 400px; /* Fixed width for better appearance */
+    text-align: center; /* Center text */
+    color: white; /* Set text color to white */
+}
+
+/* Close Button */
+.close {
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #f39c12; /* Change color on hover */
+}
+
+/* Input styles */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 15px; /* Increase padding */
+    margin: 10px 0; /* Space between inputs */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f2f2f2; /* Light background for input */
+    color: #333; /* Input text color */
+}
+
+/* Button Styles (in modals) */
+.modal-content button {
+    padding: 15px 30px; /* Larger buttons */
+    font-size: 1.2rem; /* Increase font size */
+    background-color: #f39c12; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.modal-content button:hover {
+    background-color: #e67e22; /* Darker shade on hover */
+}
+
+/* Footer Section */
+footer {
+    background-color: #34495e;
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #ecf0f1;
+}
+
+footer a:hover {
+    color: #f39c12;
+}
+
+/* Popup Notification */
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 123, 255, 0.9);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 2000;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {opacity: 1;} 
+    to {opacity: 0;}
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    padding: 20px;
+    width: 400px;
+}
+
+.profile-dropdown h3 {
+    color: #f39c12;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.profile-dropdown p {
+    margin: 10px 0;
+    color: #dcdcdc;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.profile-dropdown .profile-detail {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #dcdcdc;
+}
+
+/* Style for the navigation buttons */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Base styles for the buttons */
+.btn {
+    padding: 9px 9px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    outline: none;
+}
+
+/* Login button style */
+#loginButton {
+    background-color: #ee980d;
+    color: white;
+}
+
+#loginButton:hover {
+    background-color: #d18709;
+}
+
+/* Register button style */
+#registerButton {
+    background-color: #ee980d;
+    color: white;
+}
+
+#registerButton:hover {
+    background-color: #d18709;
+}
+
+/* Logout button style - hidden initially */
+#logoutButton {
+    background-color: #ee980d;
+    color: white;
+}
+
+#logoutButton:hover {
+    background-color: #d18709;
+}
+
+/* Profile button style - hidden initially */
+#profileButton {
+    background-color: #ee980d;
+    color: white;
+}
+
+#profileButton:hover {
+    background-color: #d18709;
+}
+
+/* Ensuring the icons inside buttons look well aligned */
+.btn i {
+    margin-right: 8px;
+}

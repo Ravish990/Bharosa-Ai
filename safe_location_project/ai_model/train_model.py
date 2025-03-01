@@ -6,8 +6,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-# ✅ Corrected file path (GitHub RAW URL)
-file_path = "https://raw.githubusercontent.com/Dinesh-singh-saini/Crime-Against-Women-Data-Visualization-using-Python/main/NCRB%20women%20crime%20data%20(2001%20-%202012).csv"
+# ✅ Corrected file path (Local CSV file)
+file_path = r"C:\Users\HP\OneDrive\Desktop\Final Hackathon\Bharosa-Ai\safe_location_project\ai_model\crime_dataset_india.csv"
 
 # ✅ Load dataset
 df = pd.read_csv(file_path, encoding="ISO-8859-1")
@@ -15,25 +15,19 @@ df = pd.read_csv(file_path, encoding="ISO-8859-1")
 # ✅ Check column names (debugging step)
 print("Columns in dataset:", df.columns)
 
-# ✅ Select necessary columns
-df = df.rename(columns={"STATE/UT": "State_UT", "CRIME HEAD": "Crime_Type"})
+# ✅ Select necessary columns (modify based on actual structure)
+df = df.rename(columns={"Crime Code": "Crime_Type", "City": "Location"})
 
-# ✅ Sum crime cases over years 2001-2012
-year_columns = [str(year) for year in range(2001, 2013)]
-df["Count"] = df[year_columns].sum(axis=1)  # Summing across all years
+# ✅ Encode categorical data
+df["Crime_Type"] = df["Crime_Type"].astype("category").cat.codes  # Crime type encoding
+df["Location"] = df["Location"].astype("category").cat.codes  # City encoding
 
-# ✅ Keep only necessary columns
-df = df[["State_UT", "Crime_Type", "Count"]]
-
-# ✅ Convert categorical column to numerical codes
-df["Crime_Type"] = df["Crime_Type"].astype("category").cat.codes
-
-# ✅ Remove rows with missing values
+# ✅ Remove missing values
 df = df.dropna()
 
-# ✅ Features & Target
-X = df[["Crime_Type"]]  
-y = df["Count"].astype(int)
+# ✅ Features & Target (Modify based on actual target)
+X = df[["Crime_Type", "Location"]]  # Feature set
+y = df["Case Closed"].astype("category").cat.codes  # Target (adjust if needed)
 
 # ✅ Split dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

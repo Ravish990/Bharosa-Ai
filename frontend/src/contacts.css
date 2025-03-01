@@ -1,0 +1,144 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: rgba(26, 188, 156, 0.9);
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 15px;
+    background-color: #28a745; /* Green color for Save button */
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Message Display */
+#message {
+    margin-top: 15px;
+    color: green; /* Change color to whatever fits your theme */
+    font-size: 1.2rem;
+}
+
+/* SOS and Share Location Buttons */
+#sosButton, #shareLocationButton {
+    background-color: #dc3545; /* Red for SOS */
+    margin-top: 20px;
+}
+
+#shareLocationButton {
+    background-color: #17a2b8; /* Blue for Share Location */
+}
+
+#sosButton:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+#shareLocationButton:hover {
+    background-color: #138496; /* Darker blue on hover */
+}
+
+/* Location Inputs Styles */
+.location-inputs {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#startingPoint, #destination {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 45%; /* Adjust width as needed */
+}
+
+/* Arrow Styles */
+.arrow {
+    margin: 0 10px;
+    width: 30px; /* Width of the arrow */
+    align-self: center; /* Center align the arrow */
+    position: relative; /* For positioning child elements */
+}
+
+.arrow::before {
+    content: '';
+    position: absolute;
+    top: 10px; /* Center vertically with respect to inputs */
+    left: 15px; /* Center horizontally */
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #333; /* Color of the arrow */
+}
